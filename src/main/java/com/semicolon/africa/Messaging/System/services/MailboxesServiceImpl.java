@@ -5,7 +5,9 @@ import com.semicolon.africa.Messaging.System.data.models.MailboxType;
 import com.semicolon.africa.Messaging.System.data.models.Mailboxes;
 import com.semicolon.africa.Messaging.System.data.repositories.MailboxesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class MailboxesServiceImpl implements MailboxesService{
 
     @Autowired

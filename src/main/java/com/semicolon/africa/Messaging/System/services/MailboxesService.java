@@ -5,5 +5,5 @@ import com.semicolon.africa.Messaging.System.data.models.Mailboxes;
 
 public interface MailboxesService {
 
-     Mailboxes createMailbox(String email, Mailbox Mailbox);
+     Mailboxes createMailbox(String email, Mailbox mailbox);
 }
