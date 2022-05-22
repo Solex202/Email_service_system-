@@ -6,6 +6,8 @@ import com.semicolon.africa.Messaging.System.data.models.Message;
 import com.semicolon.africa.Messaging.System.data.models.User;
 import com.semicolon.africa.Messaging.System.data.repositories.UserRepository;
 import com.semicolon.africa.Messaging.System.dtos.request.CreateUserRequest;
+import com.semicolon.africa.Messaging.System.dtos.request.LoginRequest;
+import com.semicolon.africa.Messaging.System.dtos.response.LoginResponse;
 import com.semicolon.africa.Messaging.System.dtos.response.UserDto;
 import com.semicolon.africa.Messaging.System.exception.EmailAlreadyExistException;
 import com.semicolon.africa.Messaging.System.exception.PasswordsMustMatchException;
@@ -46,8 +48,8 @@ public class UserServiceImpl implements UserService{
         Message message = new Message();
         message.setSender("default mailing service");
         message.setBody("Welcome to you email service " + request.getEmail());
-        mailbox.getMessage().add(message);
-        mailbox.setMailboxType(MailboxType.INBOX);
+//        mailbox.getMessage().add(message);
+//        mailbox.setMailboxType(MailboxType.INBOX);
         mailService.createMailbox(request.getEmail(), mailbox);
 
         repository.save(user);
@@ -67,6 +69,19 @@ public class UserServiceImpl implements UserService{
     @Override
     public void deleteAll() {
          repository.deleteAll();
+    }
+
+    @Override
+    public LoginResponse login(LoginRequest loginRequest) {
+        User user = new User();
+
+        LoginResponse loginResponse = new LoginResponse();
+        user.setEmail(loginRequest.getEmail());
+        user.setPassword(loginRequest.getPassword());
+
+        loginResponse.setMessage("login successful");
+
+        return loginResponse;
     }
 
 

@@ -1,6 +1,8 @@
 package com.semicolon.africa.Messaging.System.services;
 
 import com.semicolon.africa.Messaging.System.dtos.request.CreateUserRequest;
+import com.semicolon.africa.Messaging.System.dtos.request.LoginRequest;
+import com.semicolon.africa.Messaging.System.dtos.response.LoginResponse;
 import com.semicolon.africa.Messaging.System.dtos.response.UserDto;
 import com.semicolon.africa.Messaging.System.exception.EmailAlreadyExistException;
 import org.junit.jupiter.api.AfterEach;
@@ -45,6 +47,17 @@ class UserServiceTest {
 
         assertThat(userDto.getEmail(), is("mercy@gmail.com"));
 //        assertThat(userDto.getMessage(),is("user created"));
+    }
+
+    @Test
+    void testThatUserCanLoginBeforeAccessingApp(){
+        CreateUserRequest request = CreateUserRequest.builder().email("mercy@gmail.com").password("mercy4Life123").confirmPassword("mercy4Life123").build();
+        UserDto userDto = userService.createUser(request);
+        assertThat(userDto.getEmail(), is("mercy@gmail.com"));
+
+        LoginRequest loginRequest = LoginRequest.builder().email("mercy@gmail.com").password("mercy4Life123").build();
+        LoginResponse loginResponse = userService.login(loginRequest);
+        assertThat(loginResponse.getMessage(),is("login successful"));
     }
 
     @AfterEach
