@@ -5,6 +5,7 @@ import com.semicolon.africa.Messaging.System.dtos.request.LoginRequest;
 import com.semicolon.africa.Messaging.System.dtos.response.LoginResponse;
 import com.semicolon.africa.Messaging.System.dtos.response.UserDto;
 import com.semicolon.africa.Messaging.System.exception.EmailAlreadyExistException;
+import com.semicolon.africa.Messaging.System.exception.UserDoesNotExistException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -31,7 +32,7 @@ class UserServiceTest {
     }
 
     @Test
-    void testThatUserCannotCreateAccountWithEmailThatAlreadyExist(){
+    void testThatUserCannotCreateAccountWithEmailThatAlreadyExist_exception(){
         CreateUserRequest request = CreateUserRequest.builder().email("mercy@gmail.com").password("mercy4Life123").confirmPassword("mercy4Life123").build();
         userService.createUser(request);
 
@@ -58,6 +59,12 @@ class UserServiceTest {
         LoginRequest loginRequest = LoginRequest.builder().email("mercy@gmail.com").password("mercy4Life123").build();
         LoginResponse loginResponse = userService.login(loginRequest);
         assertThat(loginResponse.getMessage(),is("login successful"));
+    }
+
+    @Test
+    void testThatUnregisteredUserCannotLogin_throwException(){
+        LoginRequest loginRequest = LoginRequest.builder().email("mercy@gmail.com").password("mercy4Life123").build();
+        assertThrows(UserDoesNotExistException.class,()-> userService.login(loginRequest));
     }
 
     @AfterEach

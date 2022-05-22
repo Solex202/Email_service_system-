@@ -11,6 +11,7 @@ import com.semicolon.africa.Messaging.System.dtos.response.LoginResponse;
 import com.semicolon.africa.Messaging.System.dtos.response.UserDto;
 import com.semicolon.africa.Messaging.System.exception.EmailAlreadyExistException;
 import com.semicolon.africa.Messaging.System.exception.PasswordsMustMatchException;
+import com.semicolon.africa.Messaging.System.exception.UserDoesNotExistException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -73,6 +74,9 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public LoginResponse login(LoginRequest loginRequest) {
+        if(userDoesNotExist(loginRequest.getEmail())){
+            throw new UserDoesNotExistException("user does not exist");
+        }
         User user = new User();
 
         LoginResponse loginResponse = new LoginResponse();
@@ -82,6 +86,10 @@ public class UserServiceImpl implements UserService{
         loginResponse.setMessage("login successful");
 
         return loginResponse;
+    }
+
+    private boolean userDoesNotExist(String email) {
+        return repository.findByEmail(email) == null;
     }
 
 
