@@ -1,7 +1,6 @@
 package com.semicolon.africa.Messaging.System.services;
 
 import com.semicolon.africa.Messaging.System.data.models.Mailbox;
-import com.semicolon.africa.Messaging.System.data.models.MailboxType;
 import com.semicolon.africa.Messaging.System.data.models.Message;
 import com.semicolon.africa.Messaging.System.data.models.User;
 import com.semicolon.africa.Messaging.System.data.repositories.UserRepository;
@@ -27,7 +26,7 @@ public class UserServiceImpl implements UserService{
     private ModelMapper mapper = new ModelMapper();
 
     @Autowired
-    private MailboxesServiceImpl mailService;
+    private MailboxesServiceImpl mailboxesService;
 
     @Autowired
     private MailBoxServiceImpl mailBoxService;
@@ -51,11 +50,10 @@ public class UserServiceImpl implements UserService{
         message.setBody("Welcome to you email service " + request.getEmail());
 //        mailbox.getMessage().add(message);
 //        mailbox.setMailboxType(MailboxType.INBOX);
-        mailService.createMailbox(request.getEmail(), mailbox);
+        mailboxesService.createMailbox(request.getEmail(), mailbox);
 
         repository.save(user);
          return mapper.map(user, UserDto.class);
-
     }
 
     private boolean emailAlreadyExist(String email) {
@@ -74,8 +72,8 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public LoginResponse login(LoginRequest loginRequest) {
-        if(userDoesNotExist(loginRequest.getEmail())){
-            throw new UserDoesNotExistException("user does not exist");
+        if(userDoesNotExistInDatabase(loginRequest.getEmail())){
+            throw new UserDoesNotExistException("user does not exist, please create an account");
         }
         User user = new User();
 
@@ -88,7 +86,7 @@ public class UserServiceImpl implements UserService{
         return loginResponse;
     }
 
-    private boolean userDoesNotExist(String email) {
+    private boolean userDoesNotExistInDatabase(String email) {
         return repository.findByEmail(email) == null;
     }
 

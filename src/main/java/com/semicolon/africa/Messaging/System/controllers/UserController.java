@@ -2,8 +2,10 @@ package com.semicolon.africa.Messaging.System.controllers;
 
 import com.semicolon.africa.Messaging.System.dtos.ApiResponse;
 import com.semicolon.africa.Messaging.System.dtos.request.CreateUserRequest;
+import com.semicolon.africa.Messaging.System.dtos.request.LoginRequest;
 import com.semicolon.africa.Messaging.System.exception.EmailAlreadyExistException;
 import com.semicolon.africa.Messaging.System.exception.PasswordsMustMatchException;
+import com.semicolon.africa.Messaging.System.exception.UserDoesNotExistException;
 import com.semicolon.africa.Messaging.System.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -35,6 +37,23 @@ public class UserController {
                     .isSuccessful(false)
                     .build();
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody LoginRequest request){
+        try {
+            ApiResponse response = ApiResponse.builder()
+                    .message("id" + userService.login(request))
+                    .isSuccessful(true)
+                    .build();
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }catch (UserDoesNotExistException ex){
+            ApiResponse response = ApiResponse.builder()
+                    .message(ex.getMessage())
+                    .isSuccessful(false)
+                    .build();
+            return  new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
     }
 
