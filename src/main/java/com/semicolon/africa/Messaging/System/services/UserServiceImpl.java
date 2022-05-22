@@ -80,10 +80,13 @@ public class UserServiceImpl implements UserService{
         LoginResponse loginResponse = new LoginResponse();
         user.setEmail(loginRequest.getEmail());
         user.setPassword(loginRequest.getPassword());
+        user.setLoginStatus(true);
+        repository.save(user);
 
         loginResponse.setMessage("login successful");
 
         return loginResponse;
+        //TODO edit
     }
 
     private boolean userDoesNotExistInDatabase(String email) {

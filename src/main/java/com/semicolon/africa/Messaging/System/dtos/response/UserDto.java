@@ -8,4 +8,5 @@ public class UserDto {
 
     private String message;
     private String email;
+    private boolean loginStatus;
 }

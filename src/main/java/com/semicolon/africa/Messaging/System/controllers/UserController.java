@@ -26,7 +26,7 @@ public class UserController {
         try{
 
             ApiResponse response = ApiResponse.builder()
-                    .message("id:" + userService.createUser(request))
+                    .message("id: " + userService.createUser(request))
                     .isSuccessful(true)
                     .build();
             return new ResponseEntity<>(response, HttpStatus.OK);
@@ -44,7 +44,7 @@ public class UserController {
     public ResponseEntity<?> login(@RequestBody LoginRequest request){
         try {
             ApiResponse response = ApiResponse.builder()
-                    .message("id" + userService.login(request))
+                    .message("id: " + userService.login(request))
                     .isSuccessful(true)
                     .build();
             return new ResponseEntity<>(response, HttpStatus.OK);
