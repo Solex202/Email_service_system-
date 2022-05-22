@@ -1,5 +1,8 @@
 package com.semicolon.africa.Messaging.System.services;
 
+import com.semicolon.africa.Messaging.System.data.models.Mailbox;
+import com.semicolon.africa.Messaging.System.data.models.MailboxType;
+import com.semicolon.africa.Messaging.System.data.models.Message;
 import com.semicolon.africa.Messaging.System.data.models.User;
 import com.semicolon.africa.Messaging.System.data.repositories.UserRepository;
 import com.semicolon.africa.Messaging.System.dtos.request.CreateUserRequest;
@@ -20,6 +23,12 @@ public class UserServiceImpl implements UserService{
 
     private ModelMapper mapper = new ModelMapper();
 
+    @Autowired
+    private MailboxesServiceImpl mailService;
+
+    @Autowired
+    private MailBoxServiceImpl mailBoxService;
+
     @Override
     public UserDto createUser(CreateUserRequest request) {
         if(emailAlreadyExist(request.getEmail())){
@@ -32,16 +41,22 @@ public class UserServiceImpl implements UserService{
         User user = new User();
         user.setEmail(request.getEmail());
         user.setPassword(request.getPassword());
-//        UserDto userDto = new UserDto();
-//        userDto.setMessage("user created");
+
+        Mailbox mailbox = mailBoxService.createMailBox(request.getEmail());
+        Message message = new Message();
+        message.setSender("default mailing service");
+        message.setBody("Welcome to you email service " + request.getEmail());
+        mailbox.getMessage().add(message);
+        mailbox.setMailboxType(MailboxType.INBOX);
+        mailService.createMailbox(request.getEmail(), mailbox);
+
         repository.save(user);
          return mapper.map(user, UserDto.class);
 
     }
 
     private boolean emailAlreadyExist(String email) {
-
-      return  repository.findByEmail(email) != null;
+        return  repository.findByEmail(email) != null;
     }
 
     @Override

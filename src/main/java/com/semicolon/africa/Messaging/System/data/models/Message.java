@@ -9,5 +9,6 @@ public class Message {
     private String sender;
     private String receiver;
     private int id;
+    private String body;
     private LocalDateTime localDateTime;
 }

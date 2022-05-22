@@ -7,9 +7,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+
+
 @Data
 @AllArgsConstructor
-
 public class Mailboxes {
 
     @Id

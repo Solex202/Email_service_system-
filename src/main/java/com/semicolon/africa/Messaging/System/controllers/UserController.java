@@ -25,7 +25,8 @@ public class UserController {
 
             ApiResponse response = ApiResponse.builder()
                     .message("id:" + userService.createUser(request))
-                    .isSuccessful(true).build();
+                    .isSuccessful(true)
+                    .build();
             return new ResponseEntity<>(response, HttpStatus.OK);
         }catch (PasswordsMustMatchException  | EmailAlreadyExistException ex){
 

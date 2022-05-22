@@ -3,12 +3,21 @@ package com.semicolon.africa.Messaging.System.data.models;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Id;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
-@NoArgsConstructor
+//@NoArgsConstructor
 @AllArgsConstructor
 public class Mailbox {
-
-    private String message;
+    @Id
+    private String email;
+    private List<Message> message;
     private MailboxType mailboxType;
+
+    public Mailbox() {
+        this.message = new ArrayList<>();
+    }
 }
