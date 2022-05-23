@@ -5,15 +5,24 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
+import org.springframework.validation.annotation.Validated;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import java.util.List;
 
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor@Builder
+@AllArgsConstructor
+@Builder
+@Validated
 public class User {
 
-    @Id
+    @Id @NotNull @NotBlank
     private String email;
     private String password;
     private boolean loginStatus;
+    private List<Notification> notifications;
+
 }

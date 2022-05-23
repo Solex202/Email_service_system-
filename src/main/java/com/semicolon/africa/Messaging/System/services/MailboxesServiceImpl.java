@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class MailboxesServiceImpl implements MailboxesService{
@@ -17,6 +18,7 @@ public class MailboxesServiceImpl implements MailboxesService{
     @Autowired
     private MailboxesRepository mailboxesRepository;
 
+    @Autowired
     private MessageService messageService;
 
     @Override
@@ -28,10 +30,12 @@ public class MailboxesServiceImpl implements MailboxesService{
 
         Mailbox inbox = new Mailbox();
         inbox.setMailboxType(MailboxType.INBOX);
-        mailboxes.getMailboxes().add(inbox);
+//        mailboxes.getMailboxes().add(inbox);
 
-        CreateMessageDto createMessageDto = new CreateMessageDto("mailsender",email,"welcome to our mailservice");
+        CreateMessageDto createMessageDto = new CreateMessageDto("mail sender",email,"welcome to our mail service");
         Message createdMsg = messageService.sendMessage(createMessageDto);
+        inbox.setMessage(List.of(createdMsg));
+        mailboxes.getMailboxes().add(inbox);
 
         Mailbox sentBox = new Mailbox();
         sentBox.setMailboxType(MailboxType.SENT);
