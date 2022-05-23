@@ -47,7 +47,7 @@ class UserServiceTest {
         UserDto userDto = userService.createUser(request);
 
         assertThat(userDto.getEmail(), is("mercy@gmail.com"));
-        assertThat(userDto.getMessage(),is("user created"));
+//        assertThat(userDto.getMessage(),is("user created"));
     }
 
     @Test

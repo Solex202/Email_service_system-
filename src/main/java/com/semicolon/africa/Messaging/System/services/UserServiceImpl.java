@@ -41,16 +41,14 @@ public class UserServiceImpl implements UserService{
             throw new PasswordsMustMatchException("passwords must match");
         }
 
-        User user = new User();
-        user.setEmail(request.getEmail());
-        user.setPassword(request.getPassword());
+        User user = User.builder().email(request.getEmail()).password(request.getPassword()).build();
 
         Mailbox mailbox = mailBoxService.createMailBox(request.getEmail());
         Message message = new Message();
         message.setSender("default mailing service");
         message.setBody("Welcome to you email service " + request.getEmail());
 //        mailbox.getMessage().add(message);
-        mailbox.setMailboxType(MailboxType.INBOX);
+//        mailbox.setMailboxType(MailboxType.INBOX);
         mailboxesService.createMailbox(request.getEmail(), mailbox);
 
         repository.save(user);
@@ -76,14 +74,10 @@ public class UserServiceImpl implements UserService{
         if(userDoesNotExistInDatabase(loginRequest.getEmail())){
             throw new UserDoesNotExistException("user does not exist, please create an account");
         }
-        User user = new User();
+        User user =  User.builder().email(loginRequest.getEmail()).password(loginRequest.getPassword()).loginStatus(true).build();
 
         LoginResponse loginResponse = new LoginResponse();
-        user.setEmail(loginRequest.getEmail());
-        user.setPassword(loginRequest.getPassword());
-        user.setLoginStatus(true);
         repository.save(user);
-
         loginResponse.setMessage("login successful");
 
         return loginResponse;
