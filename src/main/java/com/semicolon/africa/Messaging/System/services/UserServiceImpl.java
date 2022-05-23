@@ -48,7 +48,7 @@ public class UserServiceImpl implements UserService{
         message.setSender("default mailing service");
         message.setBody("Welcome to you email service " + request.getEmail());
 //        mailbox.getMessage().add(message);
-//        mailbox.setMailboxType(MailboxType.INBOX);
+        mailbox.setMailboxType(MailboxType.INBOX);
         mailboxesService.createMailbox(request.getEmail(), mailbox);
 
         repository.save(user);
