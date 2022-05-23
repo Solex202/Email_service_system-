@@ -23,11 +23,11 @@ public class MailboxesServiceImpl implements MailboxesService{
         mailboxes.setMailboxes(new ArrayList<>());
 
         Mailbox sentBox = new Mailbox();
-//        sentBox.setMailboxType(MailboxType.SENT);
+        sentBox.setMailboxType(MailboxType.SENT);
         mailboxes.getMailboxes().add(sentBox);
 
         Mailbox inbox = new Mailbox();
-//        inbox.setMailboxType(MailboxType.INBOX);
+        inbox.setMailboxType(MailboxType.INBOX);
         mailboxes.getMailboxes().add(inbox);
         mailboxesRepository.save(mailboxes);
 

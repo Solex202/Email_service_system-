@@ -12,5 +12,5 @@ public class Mailbox {
     @Id
     private String email;
     private Message message;
-//    private MailboxType mailboxType;
+    private MailboxType mailboxType;
 }

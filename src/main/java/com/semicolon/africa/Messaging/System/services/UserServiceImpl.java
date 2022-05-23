@@ -1,6 +1,7 @@
 package com.semicolon.africa.Messaging.System.services;
 
 import com.semicolon.africa.Messaging.System.data.models.Mailbox;
+import com.semicolon.africa.Messaging.System.data.models.MailboxType;
 import com.semicolon.africa.Messaging.System.data.models.Message;
 import com.semicolon.africa.Messaging.System.data.models.User;
 import com.semicolon.africa.Messaging.System.data.repositories.UserRepository;
@@ -49,7 +50,7 @@ public class UserServiceImpl implements UserService{
         message.setSender("default mailing service");
         message.setBody("Welcome to you email service " + request.getEmail());
 //        mailbox.getMessage().add(message);
-//        mailbox.setMailboxType(MailboxType.INBOX);
+        mailbox.setMailboxType(MailboxType.INBOX);
         mailboxesService.createMailbox(request.getEmail(), mailbox);
 
         repository.save(user);
