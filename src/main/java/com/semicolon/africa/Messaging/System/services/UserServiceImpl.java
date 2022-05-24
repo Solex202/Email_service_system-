@@ -56,7 +56,7 @@ public class UserServiceImpl implements UserService{
     }
 
     private boolean emailAlreadyExist(String email) {
-        return  repository.findByEmail(email) != null;
+        return repository.findByEmail(email).isPresent();
     }
 
     @Override
@@ -85,7 +85,7 @@ public class UserServiceImpl implements UserService{
     }
 
     private boolean userDoesNotExistInDatabase(String email) {
-        return repository.findByEmail(email) == null;
+        return !repository.findByEmail(email).isPresent();
     }
 
 

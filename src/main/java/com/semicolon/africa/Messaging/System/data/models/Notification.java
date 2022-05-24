@@ -14,6 +14,6 @@ public class Notification {
 
     private String id;
     private String title;
-    private  String email;
+    private String email;
     private String message;
 }

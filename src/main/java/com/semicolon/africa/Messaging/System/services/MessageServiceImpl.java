@@ -19,6 +19,7 @@ public class MessageServiceImpl implements MessageService{
 
     @Autowired
     private UserRepository userRepository;
+
     @Override
     public Message sendMessage(CreateMessageDto createMessageDto) {
 
@@ -29,11 +30,13 @@ public class MessageServiceImpl implements MessageService{
                 .body(createMessageDto.getBody())
                 .build();
 
+        messageRepository.save(newMessage);
+
         User recipient = userRepository.findByEmail(createMessageDto.getReceiver()).orElseThrow(() -> new UserDoesNotExistException("receiver not founder"));
         Notification notification = Notification.builder()
                 .message(createMessageDto.getBody())
                 .email(createMessageDto.getSender())
-                .title("new message alert ")
+                .title("new message alert")
                 .id(newMessage.getMsgId())
                 .build();
         recipient.getNotifications().add(notification);
