@@ -15,5 +15,4 @@ public class Mailbox {
     private String email;
     private List<Message> message;
     private MailboxType mailboxType;
-
 }

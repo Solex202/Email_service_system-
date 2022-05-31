@@ -21,7 +21,7 @@ public class MessageServiceImpl implements MessageService{
     private UserRepository userRepository;
 
     @Override
-    public Message sendMessage(CreateMessageDto createMessageDto) {
+    public String sendMessage(CreateMessageDto createMessageDto) {
 
         Message newMessage = Message.builder()
                 .sender(createMessageDto.getSender())
@@ -42,6 +42,6 @@ public class MessageServiceImpl implements MessageService{
         recipient.getNotifications().add(notification);
         userRepository.save(recipient);
 
-        return messageRepository.save(newMessage);
+        return "Message sent";
     }
 }

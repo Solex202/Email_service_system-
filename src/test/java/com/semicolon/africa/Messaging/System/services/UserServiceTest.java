@@ -1,5 +1,7 @@
 package com.semicolon.africa.Messaging.System.services;
 
+import com.semicolon.africa.Messaging.System.data.models.Message;
+import com.semicolon.africa.Messaging.System.dtos.request.CreateMessageDto;
 import com.semicolon.africa.Messaging.System.dtos.request.CreateUserRequest;
 import com.semicolon.africa.Messaging.System.dtos.request.LoginRequest;
 import com.semicolon.africa.Messaging.System.dtos.response.LoginResponse;
@@ -19,6 +21,9 @@ class UserServiceTest {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private MessageService messageService;
 
     @BeforeEach
     void setUp() {
@@ -65,6 +70,29 @@ class UserServiceTest {
     void testThatUnregisteredUserCannotLogin_throwException(){
         LoginRequest loginRequest = LoginRequest.builder().email("mercy@gmail.com").password("mercy4Life123").build();
         assertThrows(UserDoesNotExistException.class,()-> userService.login(loginRequest));
+    }
+
+
+    @Test
+    void testThatAUserCanSendAMessage(){
+        CreateUserRequest sender = CreateUserRequest.builder().email("mercy@gmail.com").password("mercy4Life123").confirmPassword("mercy4Life123").build();
+        UserDto userDto = userService.createUser(sender);
+        assertThat(userDto.getEmail(), is("mercy@gmail.com"));
+
+        CreateUserRequest receiver = CreateUserRequest.builder().email("deola@gmail.com").password("deolaDeji").confirmPassword("deolaDeji").build();
+        UserDto userDto2 = userService.createUser(receiver);
+        assertThat(userDto2.getEmail(), is("deola@gmail.com"));
+
+
+        //sender login
+        LoginRequest loginRequest = LoginRequest.builder().email("mercy@gmail.com").password("mercy4Life123").build();
+        LoginResponse loginResponse = userService.login(loginRequest);
+        assertThat(loginResponse.getMessage(),is("login successful"));
+
+        CreateMessageDto createMessageDto = new CreateMessageDto(sender.getEmail(), receiver.getEmail(), "My first email to you");
+
+        String response = messageService.sendMessage(createMessageDto);
+
     }
 
     @AfterEach
