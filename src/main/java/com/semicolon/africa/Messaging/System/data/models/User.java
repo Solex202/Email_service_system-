@@ -11,6 +11,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -26,6 +27,6 @@ public class User {
     @Min(6)
     private String password;
     private boolean loginStatus;
-    private List<Notification> notifications;
+    private List<Notification> notifications = new ArrayList<>();
 
 }

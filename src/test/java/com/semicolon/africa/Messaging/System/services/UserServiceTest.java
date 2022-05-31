@@ -1,6 +1,7 @@
 package com.semicolon.africa.Messaging.System.services;
 
 import com.semicolon.africa.Messaging.System.data.models.Message;
+import com.semicolon.africa.Messaging.System.data.models.User;
 import com.semicolon.africa.Messaging.System.dtos.request.CreateMessageDto;
 import com.semicolon.africa.Messaging.System.dtos.request.CreateUserRequest;
 import com.semicolon.africa.Messaging.System.dtos.request.LoginRequest;
@@ -13,8 +14,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
+
+import java.util.List;
+
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 import static org.junit.jupiter.api.Assertions.*;
 @DataMongoTest
 class UserServiceTest {
@@ -87,6 +92,9 @@ class UserServiceTest {
         CreateUserRequest receiver = CreateUserRequest.builder().email("deola@gmail.com").password("deolaDeji").confirmPassword("deolaDeji").build();
         UserDto userDto2 = userService.createUser(receiver);
         assertThat(userDto2.getEmail(), is("deola@gmail.com"));
+
+        List<User> users = userService.getAllUser();
+        assertThat(users.size(), equalTo(2));
 
         LoginRequest receiverLoginRequest = LoginRequest.builder().email("deola@gmail.com").password("deolaDeji").build();
         LoginResponse loginResponse2 = userService.login(receiverLoginRequest);
