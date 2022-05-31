@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -13,6 +14,6 @@ import java.util.List;
 public class Mailbox {
     @Id
     private String email;
-    private List<Message> message;
+    private List<Message> message = new ArrayList<>();
     private MailboxType mailboxType;
 }

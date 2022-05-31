@@ -44,13 +44,13 @@ public class UserServiceImpl implements UserService{
         User user = User.builder().email(request.getEmail()).password(request.getPassword()).build();
 
         repository.save(user);
-        Mailbox mailbox = mailBoxService.createMailBox(request.getEmail());
-        Message message = new Message();
-        message.setSender("default mailing service");
-        message.setBody("Welcome to you email service " + request.getEmail());
-//        mailbox.getMessage().add(message);
-        mailbox.setMailboxType(MailboxType.INBOX);
-        mailboxesService.createMailbox(request.getEmail(), mailbox);
+//        Mailbox mailbox = mailBoxService.createMailBox(request.getEmail());
+//        Message message = new Message();
+//        message.setSender("default mailing service");
+//        message.setBody("Welcome to you email service " + request.getEmail());
+////        mailbox.getMessage().add(message);
+//        mailbox.setMailboxType(MailboxType.INBOX);
+        mailboxesService.createMailbox(request.getEmail());
          return mapper.map(user, UserDto.class);
     }
 
@@ -84,7 +84,7 @@ public class UserServiceImpl implements UserService{
     }
 
     private boolean userDoesNotExistInDatabase(String email) {
-        return !repository.findByEmail(email).isPresent();
+        return repository.findByEmail(email).isEmpty();
     }
 
 

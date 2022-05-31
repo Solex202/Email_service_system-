@@ -22,7 +22,7 @@ public class MailboxesServiceImpl implements MailboxesService{
     private MessageService messageService;
 
     @Override
-    public Mailboxes createMailbox(String email, Mailbox mailbox) {
+    public Mailboxes createMailbox(String email) {
 
         Mailboxes mailboxes = new Mailboxes();
         mailboxes.setEmail(email);

@@ -16,6 +16,7 @@ public class MailBoxServiceImpl implements MailBoxService{
         Mailbox mailbox = new Mailbox();
         mailbox.setEmail(email);
 
+
         mailboxRepository.save(mailbox);
         return mailbox;
     }
