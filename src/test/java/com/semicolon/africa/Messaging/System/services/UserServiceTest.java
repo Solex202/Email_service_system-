@@ -79,19 +79,23 @@ class UserServiceTest {
         UserDto userDto = userService.createUser(sender);
         assertThat(userDto.getEmail(), is("mercy@gmail.com"));
 
+        //sender login
+        LoginRequest senderLoginRequest = LoginRequest.builder().email("mercy@gmail.com").password("mercy4Life123").build();
+        LoginResponse loginResponse = userService.login(senderLoginRequest);
+        assertThat(loginResponse.getMessage(),is("login successful"));
+
         CreateUserRequest receiver = CreateUserRequest.builder().email("deola@gmail.com").password("deolaDeji").confirmPassword("deolaDeji").build();
         UserDto userDto2 = userService.createUser(receiver);
         assertThat(userDto2.getEmail(), is("deola@gmail.com"));
 
-
-        //sender login
-        LoginRequest loginRequest = LoginRequest.builder().email("mercy@gmail.com").password("mercy4Life123").build();
-        LoginResponse loginResponse = userService.login(loginRequest);
-        assertThat(loginResponse.getMessage(),is("login successful"));
+        LoginRequest receiverLoginRequest = LoginRequest.builder().email("deola@gmail.com").password("deolaDeji").build();
+        LoginResponse loginResponse2 = userService.login(receiverLoginRequest);
+        assertThat(loginResponse2.getMessage(), is("login successful"));
 
         CreateMessageDto createMessageDto = new CreateMessageDto(sender.getEmail(), receiver.getEmail(), "My first email to you");
 
-        String response = messageService.sendMessage(createMessageDto);
+        Message response = messageService.sendMessage(createMessageDto);
+        assertThat(response.getMsg(), is("message sent"));
 
     }
 

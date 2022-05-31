@@ -5,5 +5,5 @@ import com.semicolon.africa.Messaging.System.dtos.request.CreateMessageDto;
 
 public interface MessageService {
 
-    String sendMessage(CreateMessageDto createMessageDto);
+    Message sendMessage(CreateMessageDto createMessageDto);
 }

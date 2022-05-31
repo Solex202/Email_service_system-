@@ -19,4 +19,5 @@ public class Message {
     private String receiver;
     private String body;
     private LocalDateTime localDateTime;
+    private String msg;
 }

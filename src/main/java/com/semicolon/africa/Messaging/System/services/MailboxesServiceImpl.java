@@ -35,6 +35,7 @@ public class MailboxesServiceImpl implements MailboxesService{
         CreateMessageDto createMessageDto = new CreateMessageDto("mail sender",email,"welcome to our mail service");
         Message createdMsg = messageService.sendMessage(createMessageDto);
         inbox.setMessage(List.of(createdMsg));
+//        inbox.setMessage(createdMsg);
         mailboxes.getMailboxes().add(inbox);
 
         Mailbox sentBox = new Mailbox();
