@@ -40,7 +40,11 @@ class UserServiceTest {
 
     @Test
     void testThatCanCreateUser(){
-        CreateUserRequest request = CreateUserRequest.builder().email("mercy@gmail.com").password("mercy4Life123").confirmPassword("mercy4Life123").build();
+        CreateUserRequest request = CreateUserRequest.builder()
+                .email("mercy@gmail.com")
+                .password("mercy4Life123")
+                .confirmPassword("mercy4Life123")
+                .build();
         userService.createUser(request);
         assertThat(userService.getAllUser().size(), is(1));
     }
